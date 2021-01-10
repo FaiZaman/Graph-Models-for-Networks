@@ -1,0 +1,98 @@
+This is a social network with vertices representing members of a karate club observed by Zachary for roughly 
+two years during the 1970s; edges indicate social interaction between two members.  The first two columns 
+refer to the ids of the two members, while the third column contains an edge weight representing 
+a measure of frequency of social interaction.
+
+The dataset is a favorite among researchers developing algorithms for detection of social subgroups, since Zachary had 
+the curious fortune to witness the club split into two different clubs during his period of observation, due to a 
+dispute between the head teacher and an administrator.  The split was into 
+
+{1,2,3,4,5,6,7,8,11,12,13,14,17,18,20,22} 
+
+and
+
+{9,10,15,16,19,21,23,24,25,26,27,28,29,30,31,32,33,34}.
+
+
+W. Zachary, "An information flow model for conflict and fission in small groups," Journal of Anthropological Research, 
+vol. 33, no. 4,  pp. 452-473, 1977.
+This version a modified version of the data available from http://math.bu.edu/people/kolaczyk/datasets.html
+
+1 2 4
+1 3 5
+1 4 3
+1 5 3
+1 6 3
+1 7 3
+1 8 2
+1 9 2
+1 11 2
+1 12 3
+1 13 1
+1 14 3
+1 18 2
+1 20 2
+1 22 2
+1 32 2
+2 3 6
+2 4 3
+2 8 4
+2 14 5
+2 18 1
+2 20 2
+2 22 2
+2 31 2
+3 4 3
+3 8 4
+3 9 5
+3 10 1
+3 14 3
+3 28 2
+3 29 2
+3 33 2
+4 8 3
+4 13 3
+4 14 3
+5 7 2
+5 11 3
+6 7 5
+6 11 3
+6 17 3
+7 17 3
+9 31 3
+9 33 3
+9 34 4
+10 34 2
+14 34 3
+15 33 3
+15 34 2
+16 33 3
+16 34 4
+19 33 1
+19 34 2
+20 34 1
+21 33 3
+21 34 1
+23 33 2
+23 34 3
+24 26 5
+24 28 4
+24 30 3
+24 33 5
+24 34 4
+25 26 2
+25 28 3
+25 32 2
+26 32 7
+27 30 4
+27 34 2
+28 34 4
+29 32 2
+29 34 2
+30 33 4
+30 34 2
+31 33 3
+31 34 3
+32 33 4
+32 34 4
+33 34 5
