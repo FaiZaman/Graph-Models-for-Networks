@@ -1,4 +1,8 @@
+import numpy as np
+from itertools import permutations
 
+# takes source and destination nodes and returns list of nodes
+# and ending with the destination detailing the route provided
 def star5_routing(source, destination):
 
     # initialise route and current node
@@ -38,6 +42,22 @@ def star5_routing(source, destination):
     return route
 
 
+# simulates the all-to-all traffic pattern to determine cumulative channel loads
+def simulate_traffic():
+
+    # generate the nodes of S5 and initialise channel loads matrix
+    nodes = list(permutations([i for i in range(1, 6)]))
+    nodes = [list(node) for node in nodes]
+    channel_loads_matrix = np.zeros((120, 120))
+
+    
+
+
+
+simulate_traffic()
+
+"""
 route = star5_routing([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])
 for node in route:
     print(node)
+"""
