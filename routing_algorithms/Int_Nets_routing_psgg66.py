@@ -193,6 +193,47 @@ def karyncube_routing(n, k, source, target):
     return route
 
 
-route = karyncube_routing(4, 6, [1, 4, 3, 2], [2, 1, 1, 3])
+#route = karyncube_routing(4, 6, [1, 4, 3, 2], [2, 1, 1, 3])
+#for node in route:
+#    print(node)
+
+
+# decreasing dimension order routing 
+def cubeconncycle_routing(n, source, target):
+
+    # initialise route, current node, and cycle position
+    route = [source]
+    current_node = source.copy()
+    i = current_node[-1]
+    index = n - i
+
+    # keep routing until the target node is reached
+    while current_node != target:
+
+        # hypercube links
+        if current_node[index] != target[index]:
+
+            # flip the bit and update route
+            current_node[index] = 1 - current_node[index]
+            route.append(current_node.copy())
+
+            # take the cycle link as the index is incremented
+            current_node[-1] = (current_node[-1] - 1) % n if current_node[-1] > 1 else n
+            route.append(current_node.copy())
+
+        # cycle links
+        else:
+
+            # update the cycle component
+            current_node[-1] = (current_node[-1] - 1) % n if current_node[-1] > 1 else n
+            route.append(current_node.copy())
+
+        # update index and route
+        index = (index + 1) % n
+
+    return route
+
+
+route = cubeconncycle_routing(4, [0, 1, 0, 1, 3], [1, 1, 1, 0, 4])
 for node in route:
     print(node)
