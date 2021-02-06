@@ -36,7 +36,7 @@ def star5_routing(source, destination):
                 current_node[0], current_node[index] = current_node[index], current_node[0]
                 break
 
-        route.append(current_node.copy())
+        route.append(current_node.copy())  # append the new node to the route
 
     return route
 
@@ -57,12 +57,8 @@ def simulate_traffic():
             source_index = nodes.index(source)
             destination_index = nodes.index(destination)
 
-            # same source and destination means channel load is zero
-            if source == destination:
-
-                channel_loads_matrix[source_index][destination_index] = 0
-
-            else:
+            # same source and destination means channel load is zero; remain unchanged
+            if source != destination:
 
                 # compute the route b/w source and destination + get pairs of nodes from route
                 route = star5_routing(source, destination)
@@ -78,12 +74,16 @@ def simulate_traffic():
                     # update values
                     channel_loads_matrix[node1_index][node2_index] += 1
 
-    for row in channel_loads_matrix:
-        print(row)
+    # printing the loads
+    for i in range(0, len(channel_loads_matrix)):
+        for channel in range(0, len(channel_loads_matrix)):
+            if channel_loads_matrix[i][channel] > 0:
+                print("Load on channel from", nodes[i], "to", nodes[channel],\
+                    "is", channel_loads_matrix[i][channel])
+
 
 
 simulate_traffic()
-
 
 route = star5_routing([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])
 for node in route:
