@@ -1,5 +1,7 @@
 from itertools import permutations
 
+# ============================ STAR GRAPH ROUTING ============================
+
 # takes source and destination nodes and returns list of nodes
 # and ending with the destination detailing the route provided
 def star5_routing(source, destination):
@@ -82,10 +84,38 @@ def simulate_traffic():
                     "is", channel_loads_matrix[i][channel])
 
 
+#simulate_traffic()
 
-simulate_traffic()
+#route = star5_routing([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])
+#for node in route:
+#    print(node)
 
-route = star5_routing([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])
+
+# ============================ DIMENSION ORDER ROUTING ============================
+
+def hypercube_routing(n, source, target):
+
+    # initialise route and current node
+    route = [source]
+    current_node = source.copy()
+    dimension = n - 1
+
+    # keep routing until the target node is reached
+    while current_node != target:
+
+        # if bits are equal move to next dimension
+        if current_node[dimension] != target[dimension]:
+
+            # flip the bit and update route
+            current_node[dimension] = 1 - current_node[dimension]
+            route.append(current_node.copy())
+
+        # update dimension
+        dimension -= 1
+
+    return route
+
+
+route = hypercube_routing(8, [1, 0, 0, 1, 1, 0, 1, 0], [0, 1, 1, 0, 0, 0, 0, 1])
 for node in route:
     print(node)
-
