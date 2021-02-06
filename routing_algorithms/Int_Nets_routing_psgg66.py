@@ -47,9 +47,9 @@ def star5_routing(source, destination):
 def simulate_traffic():
 
     # generate the nodes of S5 and initialise channel loads matrix
-    nodes = list(permutations([i for i in range(1, 6)]))
+    nodes = list(permutations([i for i in range(1, 4)]))
     nodes = [list(node) for node in nodes]
-    channel_loads_matrix = [[0 for x in range(120)] for y in range(120)] 
+    channel_loads_matrix = [[0 for x in range(6)] for y in range(6)] 
 
     # all-to-all traffic pattern
     for source in nodes:
@@ -76,6 +76,7 @@ def simulate_traffic():
                     # update values
                     channel_loads_matrix[node1_index][node2_index] += 1
 
+
     # printing the loads
     for i in range(0, len(channel_loads_matrix)):
         for channel in range(0, len(channel_loads_matrix)):
@@ -83,8 +84,10 @@ def simulate_traffic():
                 print("Load on channel from", nodes[i], "to", nodes[channel],\
                     "is", channel_loads_matrix[i][channel])
 
+    return channel_loads_matrix
 
-#simulate_traffic()
+
+channel_loads_matrix = simulate_traffic()
 
 #route = star5_routing([1, 2, 3, 4, 5], [5, 4, 3, 2, 1])
 #for node in route:
@@ -93,9 +96,10 @@ def simulate_traffic():
 
 # ============================ DIMENSION ORDER ROUTING ============================
 
+# increasing dimension-order routing for hypercube of dimension n from source to target
 def hypercube_routing(n, source, target):
 
-    # initialise route and current node
+    # initialise route, current node, and dimension
     route = [source]
     current_node = source.copy()
     dimension = n - 1
@@ -116,6 +120,24 @@ def hypercube_routing(n, source, target):
     return route
 
 
-route = hypercube_routing(8, [1, 0, 0, 1, 1, 0, 1, 0], [0, 1, 1, 0, 0, 0, 0, 1])
-for node in route:
-    print(node)
+#route = hypercube_routing(8, [1, 0, 0, 1, 1, 0, 1, 0], [0, 1, 1, 0, 0, 0, 0, 1])
+#for node in route:
+#    print(node)
+
+
+# increasing dimension-order routing for k-ary n-cube from source to target
+def karyncube_routing(n, k, source, target):
+
+    # initialise route, current node, and dimension
+    route = [source]
+    current_node = source.copy()
+    dimension = n - 1
+
+    # keep routing until the target node is reached
+    while source != target:
+
+        # if bits are equal move to next dimension
+        if current_node[dimension] != target[dimension]:
+
+            pass
+
