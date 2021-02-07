@@ -133,24 +133,19 @@ def karyncube_routing(n, k, source, target):
     # keep routing until the target node is reached
     while current_node != target:
 
-        u = current_node[dimension]
         v = target[dimension]
 
         # if bits are equal move to next dimension
         while current_node[dimension] != target[dimension]:
-
+            
             # calculate both distances - with and without wrapping
+            u = current_node[dimension]
             non_wrap_distance = abs(u - v)
             wrap_distance = k - non_wrap_distance
 
             # break ties by increasing component
             if non_wrap_distance == wrap_distance:
-
-                # wrap around switch
-                if current_node[dimension] == k - 1:
-                    current_node[dimension] = 0
-                else:
-                    current_node[dimension] += 1
+                current_node[dimension] = (u + 1) % k
 
             # without wrapping around
             elif non_wrap_distance < wrap_distance:
@@ -166,36 +161,21 @@ def karyncube_routing(n, k, source, target):
 
                 # determine whether increasing/decreasing component is required + break ties
                 if u >= v:
-
-                    # wrap around switch
-                    if current_node[dimension] == k - 1:
-                        current_node[dimension] = 0
-
-                    # normal incrementation
-                    else:
-                        current_node[dimension] += 1
-
+                    current_node[dimension] = (u + 1) % k
                 else:
+                    current_node[dimension] = (u - 1) % k
 
-                    # wrap around switch
-                    if current_node[dimension] == 0:
-                        current_node[dimension] = k - 1
-
-                    # normal decrementation
-                    else:
-                        current_node[dimension] -= 1
-            
             # update route and dimension
             route.append(current_node.copy())
 
         dimension -= 1
-    
+
     return route
 
 
-#route = karyncube_routing(4, 6, [1, 4, 3, 2], [2, 1, 1, 3])
-#for node in route:
-#    print(node)
+route = karyncube_routing(6, 4, [0, 2, 3, 1, 0, 2], [2, 0, 1, 1, 2, 3])
+for node in route:
+    print(node)
 
 
 # decreasing dimension order routing 
@@ -217,23 +197,34 @@ def cubeconncycle_routing(n, source, target):
             current_node[index] = 1 - current_node[index]
             route.append(current_node.copy())
 
-            # take the cycle link as the index is incremented
-            current_node[-1] = (current_node[-1] - 1) % n if current_node[-1] > 1 else n
-            route.append(current_node.copy())
+        # breaks after being reached
+        if current_node != target:
 
-        # cycle links
-        else:
+            if current_node[:-1] == target[:-1]:
 
-            # update the cycle component
-            current_node[-1] = (current_node[-1] - 1) % n if current_node[-1] > 1 else n
-            route.append(current_node.copy())
+                # catch all cases
+                if (current_node[-1] - target[-1]) % n <= (target[-1] - current_node[-1]) % n:
+                    current_node[-1] = ((current_node[-1] - 2) % n) + 1
+                else:
+                    if current_node[-1] != n - 1:
+                        current_node[-1] = (current_node[-1] + 1) % n
+                    else:
+                        current_node[-1] = n
 
-        # update index and route
+                route.append(current_node.copy())
+
+            else:
+
+                # cycle links - update the cycle component
+                current_node[-1] = ((current_node[-1] - 2) % n) + 1
+                route.append(current_node.copy())
+
+        # update index and return route
         index = (index + 1) % n
 
     return route
 
 
-route = cubeconncycle_routing(4, [0, 1, 0, 1, 3], [1, 1, 1, 0, 4])
-for node in route:
-    print(node)
+#route = cubeconncycle_routing(4, [0, 0, 0, 0, 2], [1, 1, 1, 1, 2])
+#for node in route:
+#    print(node)
